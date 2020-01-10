@@ -1,0 +1,54 @@
+--------------------------------Triger de Deposito------------------
+/*Create trigger Deposito on Transacciones
+After insert
+As
+DECLARE @valor_Deposito varchar(50)
+DECLARE @saldo_cuenta varchar(50)
+
+SET @valor_Deposito = (SELECT Deposito FROM inserted)
+SET @saldo_cuenta = (SELECT Saldo FROM Transaccion)
+
+declare @v_Deposito int
+declare @s_cuenta int
+
+select 
+@v_Deposito= convert(int,convert(varchar(50),@valor_Deposito)),
+@s_cuenta= convert(int,convert(varchar(50),@s_cuenta))
+
+declare @total int
+select
+@total = @s_cuenta+@v_Deposito
+
+declare @tot varchar(50)
+
+select 
+@tot=convert(varchar(50),convert(int,@total))
+update Transaccion set Saldo = @tot*/
+-----------------------------------Trigger de Retiro----------------
+Create trigger Retiro on Transacciones
+After insert
+As
+DECLARE @valor_Retiro varchar(50)
+DECLARE @saldo_cuenta varchar(50)
+
+SET @valor_Retiro = (SELECT Retiro FROM inserted)
+SET @saldo_cuenta = (SELECT Saldo FROM Transaccion)
+
+declare @v_retiro int
+declare @s_cuenta int
+
+select 
+@v_Retiro= convert(int,convert(varchar(50),@valor_Retiro)),
+@s_cuenta= convert(int,convert(varchar(50),@s_cuenta))
+
+declare @total int
+select
+@total = @s_cuenta-@v_retiro
+
+declare @tot varchar(50)
+
+select 
+@tot=convert(varchar(50),convert(int,@total))
+update Transaccion set Saldo = @tot
+
+
